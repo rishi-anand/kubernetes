@@ -1,0 +1,31 @@
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: default
+  labels:
+    app: nginx
+    rishi: anand
+    test: 21nov
+    new: test
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+      rishi: anand
+      test: 21nov
+  template:
+    metadata:
+      labels:
+        app: nginx
+        rishi: anand
+        test: 21nov
+        one: message
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:latest
+        ports:
+        - containerPort: 80

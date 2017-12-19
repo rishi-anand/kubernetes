@@ -1,0 +1,10 @@
+/src/main/resources/auth.properties
+/src/main/resources/ca.crt
+/src/main/resources/apiserver-kubelet-client*
+/src/main/resources/dump.txt
+/target
+/.idea/
+/kubernetes.iml
+src/main/resources/ca.crt
+
+
