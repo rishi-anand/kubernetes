@@ -7,6 +7,8 @@ spec:
   containers:              #ContainerCreateTemplate 1
   - name: db
     image: mysql
+    command: ["/bin/sh"]    # TODO discuss capture command information
+    args: ["-c", "echo Hello from the debian container > /pod-data/index.html"]
     env:
     - name: MYSQL_ROOT_PASSWORD
       value: "password"

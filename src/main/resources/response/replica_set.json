@@ -1,40 +1,56 @@
 {
-  "kind": "Deployment",
-  "apiVersion": "extensions/v1beta1",
+  "kind": "ReplicaSet",   //TODO y y y
+  "apiVersion": "extensions/v1beta1",   //TODO y y y
   "metadata": {
-    "name": "gocd-agent-test",
-    "namespace": "default",
-    "selfLink": "/apis/extensions/v1beta1/namespaces/default/deployments/gocd-agent-test",   // x x x
-    "uid": "a4b00856-e56a-11e7-95b3-42010a80004d",
-    "resourceVersion": "5250757",    // x x x
-    "generation": 2,               // x x x
-    "creationTimestamp": "2017-12-20T09:46:25Z",
-    "labels": {
+    "name": "gocd-agent-test-74bd57c78",   //TODO y y y
+    "namespace": "default",  //TODO y y y
+    "selfLink": "/apis/extensions/v1beta1/namespaces/default/replicasets/gocd-agent-test-74bd57c78",   // x x x
+    "uid": "16782505-e56b-11e7-95b3-42010a80004d",   //TODO y y y
+    "resourceVersion": "5250756",    // x x x
+    "generation": 1,                 // x x x
+    "creationTimestamp": "2017-12-20T09:49:35Z",   //TODO y y y
+    "labels": {   //TODO y y y
       "app": "gocd-agent-test",
-      "release": "test"
+      "pod-template-hash": "306813734",
+      "release": "test",
+      "test": "rc"
     },
-    "annotations": {          // x x x
+    "annotations": {    // x x x
+      "deployment.kubernetes.io/desired-replicas": "2",
+      "deployment.kubernetes.io/max-replicas": "2",
       "deployment.kubernetes.io/revision": "2"
-    }
+    },
+    "ownerReferences": [   // x x x
+      {
+        "apiVersion": "extensions/v1beta1",
+        "kind": "Deployment",
+        "name": "gocd-agent-test",
+        "uid": "a4b00856-e56a-11e7-95b3-42010a80004d",
+        "controller": true,
+        "blockOwnerDeletion": true
+      }
+    ]
   },
   "spec": {
-    "replicas": 2,
+    "replicas": 2,    //TODO y y y
     "selector": {
       "matchLabels": {
         "app": "gocd-agent-test",
+        "pod-template-hash": "306813734",
         "release": "test"
       }
     },
-    "template": {
+    "template": {   // x x x
       "metadata": {
         "creationTimestamp": null,
         "labels": {
           "app": "gocd-agent-test",
+          "pod-template-hash": "306813734",
           "release": "test",
           "test": "rc"
         }
       },
-      "spec": {       // will be captured in Placement Group
+      "spec": {  // x x x    Container and other related information will be taken from Pod
         "volumes": [
           {
             "name": "ssh-keys",
@@ -65,7 +81,7 @@
             }
           }
         ],
-        "containers": [
+        "containers": [   // x x x
           {
             "name": "gocd-agent",
             "image": "test",
@@ -115,37 +131,22 @@
                 "mountPath": "/usr/bin/docker"
               }
             ],
-            "terminationMessagePath": "/dev/termination-log",     // x x x
-            "terminationMessagePolicy": "File",         // x x x
-            "imagePullPolicy": "Always"
+            "terminationMessagePath": "/dev/termination-log",   // x x x
+            "terminationMessagePolicy": "File",      // x x x
+            "imagePullPolicy": "Always"       // x x x
           }
         ],
-        "restartPolicy": "Always",              //TODO x x x    or to be captured in metadata
+        "restartPolicy": "Always",               // x x x
         "terminationGracePeriodSeconds": 30,    // x x x
-        "dnsPolicy": "ClusterFirst",            // x x x
-        "securityContext": {},                    // x x x
-        "schedulerName": "default-scheduler"          // x x x
+        "dnsPolicy": "ClusterFirst",             // x x x
+        "securityContext": {},                   // x x x
+        "schedulerName": "default-scheduler"     // x x x
       }
-    },
-    "strategy": {        // x x x
-      "type": "Recreate"
-    },
-    "revisionHistoryLimit": 25     //TODO x x x    or to be captured in ReplicaSet
+    }
   },
-  "status": {
-    "observedGeneration": 2,
-    "replicas": 2,                  //TODO capture this in (Deployment || ReplicaSet)
-    "updatedReplicas": 2,         //TODO   x x x or capture ??????
-    "unavailableReplicas": 2,     //TODO
-    "conditions": [
-      {
-        "type": "Available",
-        "status": "False",
-        "lastUpdateTime": "2017-12-20T09:46:25Z",
-        "lastTransitionTime": "2017-12-20T09:46:25Z",
-        "reason": "MinimumReplicasUnavailable",                    //TODO capture resson in Deployment
-        "message": "Deployment does not have minimum availability."      //TODO
-      }
-    ]
+  "status": {                   // x x x
+    "replicas": 2,
+    "fullyLabeledReplicas": 2,
+    "observedGeneration": 1
   }
 }
