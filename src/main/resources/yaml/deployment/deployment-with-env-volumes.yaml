@@ -1,0 +1,61 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: gocd-agent-${AGENT_NAME}
+spec:
+  replicas: ${AGENT_REPLICAS}
+  strategy:
+    type: Recreate
+  revisionHistoryLimit: 25
+  selector:
+    matchLabels:
+      app: gocd-agent-${AGENT_NAME}
+      release: v${VERSION}
+  template:
+    metadata:
+      labels:
+        app: gocd-agent-${AGENT_NAME}
+        release: v${VERSION}
+    spec:
+      containers:
+      - name: gocd-agent
+        image: ${AGENT_IMAGE}
+        imagePullPolicy: Always
+        volumeMounts:
+        - name: ssh-keys
+          mountPath: /var/go/.ssh
+        - name: gcloud-keys
+          mountPath: /var/go/.gcloud
+        - name: docker-sock
+          mountPath: /var/run/docker.sock
+        - name: docker-bin
+          mountPath: /usr/bin/docker
+        env:
+        - name: "GO_SERVER"
+          value: "gocd-server"
+        - name: "AGENT_KEY"
+          value: "something"
+        - name: "AGENT_RESOURCES"
+          value: "${AGENT_RESOURCES}"
+        - name: "DOCKER_GID_ON_HOST"
+          value: "107"
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1024Mi
+          requests:
+            cpu: 10m
+            memory: 512Mi
+      volumes:
+      - name: ssh-keys
+        secret:
+          secretName: ssh-keys
+      - name: gcloud-keys
+        secret:
+          secretName: gcloud-keys
+      - name: docker-sock
+        hostPath:
+          path: /var/run/docker.sock
+      - name: docker-bin
+        hostPath:
+          path: /usr/bin/docker
