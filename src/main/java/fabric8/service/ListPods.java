@@ -4,14 +4,10 @@ import fabric8.authentication.AuthenticationService;
 import fabric8.authentication.KubernetesCredential;
 import fabric8.util.KubernetesErrorUtil;
 import io.fabric8.kubernetes.client.*;
-import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 
 
 public class ListPods {
@@ -42,7 +38,7 @@ public class ListPods {
     }
 
     private static void updatePod(KubernetesClient client){
-        InputStream inputStream = ListPods.class.getResourceAsStream("/deployment-nginx.yml");
+        InputStream inputStream = ListPods.class.getResourceAsStream("/yaml/deployment-nginx.yml");
         client.load(inputStream).createOrReplaceAnd();
         System.out.println("Updated pod.");
     }
