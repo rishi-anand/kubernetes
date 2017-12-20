@@ -198,7 +198,7 @@
                 name: "${APPLICATION_NAME}"
                 image: "${APPLICATION_NAME}"
                 imagePullPolicy: "Always"
-                readinessProbe: 
+                readinessProbe:
                   exec: 
                     command: 
                       - "/bin/bash"

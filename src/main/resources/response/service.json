@@ -1,0 +1,40 @@
+{
+  //TODO capture below information in Deployment.Endpoint
+  //TODO also check how to capture hostIp and podIp in PlacemetGroup
+
+  "kind": "Service",
+  "apiVersion": "v1",
+  "metadata": {
+    "name": "redis-master",
+    "namespace": "default",
+    "selfLink": "/api/v1/namespaces/default/services/redis-master",       // x x x
+    "uid": "e8631c77-e4cc-11e7-95b3-42010a80004d",
+    "resourceVersion": "5143318",          // x x x
+    "creationTimestamp": "2017-12-19T14:57:18Z",
+    "labels": {
+      "app": "redis",
+      "role": "master",
+      "tier": "backend"
+    }
+  },
+  "spec": {
+    "ports": [
+      {
+        "protocol": "TCP",
+        "port": 6379,
+        "targetPort": 6379
+      }
+    ],
+    "selector": {
+      "app": "redis",
+      "role": "master",
+      "tier": "backend"
+    },
+    "clusterIP": "10.23.253.105",
+    "type": "ClusterIP",          //TODO create enum { NodePort, ClusterIP }
+    "sessionAffinity": "None"          // x x x
+  },
+  "status": {                  //TODO decide
+    "loadBalancer": {}
+  }
+}

@@ -1,22 +1,27 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
+  namespace: default
   name: gocd-agent-test
 spec:
+ # ------  below resource is valid for replication controller
   replicas: 2
   strategy:
     type: Recreate
-  revisionHistoryLimit: 25 #map
+  revisionHistoryLimit: 25
+  # ------- end -------
   selector:
     matchLabels:
       app: gocd-agent-test
       release: test
   template:
+  # ------  below labels is valid for replication controller
     metadata:
       labels:
         app: gocd-agent-test
         release: test
-        # above labels is valid for replication controller
+        rishi: anand
+        # ------- end -------
     spec:
       containers:
       - name: gocd-agent
@@ -54,7 +59,7 @@ spec:
             cpu: 10m
             memory: 512Mi
 
-#part of deployment
+#pod.json level resource
       volumes:
       - name: ssh-keys
         secret:

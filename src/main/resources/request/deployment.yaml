@@ -1,0 +1,115 @@
+apiVersion: extensions/v1beta1      # DeploymentCreateTemplate
+kind: Deployment
+metadata:
+  namespace: default
+  name: gocd-agent-test
+spec:
+  replicas: 2           # ReplicaSerCreateTemplate
+  strategy:              # ReplicaSerCreateTemplate
+    type: Recreate        # ReplicaSerCreateTemplate
+  revisionHistoryLimit: 25  # ReplicaSerCreateTemplate
+  selector:
+    matchLabels:
+      app: gocd-agent-test
+      release: test
+  template:
+    metadata:        # ReplicaSerCreateTemplate    #PlacementGroupTemplate (just labels)
+      labels:
+        app: gocd-agent-test
+        release: test
+        rishi: anand
+
+    spec:
+      containers:       #ContainerCreateTemplate
+      - name: gocd-agent
+        image: test
+        imagePullPolicy: Always
+
+
+        volumeMounts:
+        - name: ssh-keys
+          mountPath: /var/go/.ssh
+        - name: gcloud-keys
+          mountPath: /var/go/.gcloud
+        - name: docker-sock
+          mountPath: /var/run/docker.sock
+        - name: docker-bin
+          mountPath: /usr/bin/docker
+
+
+        env:
+        - name: "GO_SERVER"
+          value: "gocd-server"
+        - name: "AGENT_KEY"
+          value: "something"
+        - name: "AGENT_RESOURCES"
+          value: "${AGENT_RESOURCES}"
+        - name: "DOCKER_GID_ON_HOST"
+          value: "107"
+
+
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1024Mi
+          requests:
+            cpu: 10m
+            memory: 512Mi         #ContainerCreateTemplate
+
+#pod.json level resource
+      volumes:                    #PlacementGroupTemplate
+      - name: ssh-keys
+        secret:
+          secretName: ssh-keys
+      - name: gcloud-keys
+        secret:
+          secretName: gcloud-keys
+      - name: docker-sock
+        hostPath:
+          path: /var/run/docker.sock
+      - name: docker-bin
+        hostPath:
+          path: /usr/bin/docker
+
+
+
+
+#
+#containers:
+#  -
+#    name: "${APPLICATION_NAME}"
+#    image: "${APPLICATION_NAME}"
+#    imagePullPolicy: "Always"
+#    readinessProbe:           //
+#      exec:
+#        command:     // TODO find how to capture this env information, earlier created env as MAP
+#          - "/bin/bash"
+#          - "-c"
+#          - "/opt/eap/bin/readinessProbe.sh"
+#    ports:
+#      -
+#        name: "http"
+#        containerPort: 8080
+#        protocol: "TCP"
+#      -
+#        name: "ping"
+#        containerPort: 8888
+#        protocol: "TCP"
+#    env:
+#      -
+#        name: "OPENSHIFT_KUBE_PING_LABELS"
+#        value: "application=${APPLICATION_NAME}"
+#      -
+#        name: "OPENSHIFT_KUBE_PING_NAMESPACE"    // TODO find how to capture this information and command and arguments
+#        valueFrom:
+#          fieldRef:
+#            fieldPath: "metadata.namespace"
+#      -
+#        name: "HORNETQ_CLUSTER_PASSWORD"
+#        value: "${HORNETQ_CLUSTER_PASSWORD}"
+#      -
+#        name: "HORNETQ_QUEUES"
+#        value: "${HORNETQ_QUEUES}"
+#      -
+#        name: "HORNETQ_TOPICS"
+#        value: "${HORNETQ_TOPICS}"

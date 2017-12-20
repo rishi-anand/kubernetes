@@ -22,7 +22,7 @@ public class ListPods {
     public static void main(String[] args) throws Exception{
 
         try {
-            KubernetesClient client = new AuthenticationService(new KubernetesCredential().kubernetesHAGCE())
+            KubernetesClient client = new AuthenticationService(new KubernetesCredential().rishiGCEContainerK8())
                     .authenticate();
 
             listPods(client);
@@ -46,15 +46,23 @@ public class ListPods {
     private static void updatePod(KubernetesClient client){
         InputStream inputStream = ListPods.class.getResourceAsStream("/yaml/deployment-nginx.yml");
         client.load(inputStream).createOrReplaceAnd();
-        System.out.println("Updated pod.");
+        System.out.println("Updated pod.json.");
     }
 
     private static void testObj(KubernetesClient client){
         try {
             String fileLocation = "/yaml/deployment/deployment-with-env-volumes-test.yaml";
             InputStream inputStream = ListPods.class.getResourceAsStream(fileLocation);
-            Deployment podTemplate = client.extensions().deployments().load(inputStream).get();
-            logger.info("podTemplate :", podTemplate);
+            Deployment deployment = client.extensions().deployments().load(inputStream).get();
+            logger.info("deployment :", deployment);
+
+            //update in deployment is not working from fabric8 sdk
+            Deployment deployment1 = client.extensions().deployments().inNamespace("default").withName("nginx-deployment").get();
+            deployment.getSpec().setReplicas(1);
+
+
+            //client.extensions().deployments().createOrReplace(deployment);
+            logger.info("updated deployment OK");
         } catch (Exception e){
             e.printStackTrace();
         }

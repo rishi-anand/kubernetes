@@ -1,0 +1,18 @@
+apiVersion: v1            #EndpointCreateTemplate
+kind: Service
+metadata:
+  annotations:
+    service.alpha.kubernetes.io/tolerate-unready-endpoints: "true"
+  name: nginx
+  namespace: default
+  labels:
+    app: nginx           # TODO capture service information in endpoints
+spec:
+  type: NodePort
+  ports:
+  - port: 80
+    name: nginx
+    targetPort: 80
+    nodePort: 32756
+  selector:
+    app: nginx

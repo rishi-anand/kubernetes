@@ -1,0 +1,151 @@
+{
+  "kind": "Deployment",
+  "apiVersion": "extensions/v1beta1",
+  "metadata": {
+    "name": "gocd-agent-test",
+    "namespace": "default",
+    "selfLink": "/apis/extensions/v1beta1/namespaces/default/deployments/gocd-agent-test",   // x x x
+    "uid": "a4b00856-e56a-11e7-95b3-42010a80004d",
+    "resourceVersion": "5250757",    // x x x
+    "generation": 2,               // x x x
+    "creationTimestamp": "2017-12-20T09:46:25Z",
+    "labels": {
+      "app": "gocd-agent-test",
+      "release": "test"
+    },
+    "annotations": {          // x x x
+      "deployment.kubernetes.io/revision": "2"
+    }
+  },
+  "spec": {
+    "replicas": 2,
+    "selector": {
+      "matchLabels": {
+        "app": "gocd-agent-test",
+        "release": "test"
+      }
+    },
+    "template": {
+      "metadata": {
+        "creationTimestamp": null,
+        "labels": {
+          "app": "gocd-agent-test",
+          "release": "test",
+          "test": "rc"
+        }
+      },
+      "spec": {       // will be captured in Placement Group
+        "volumes": [
+          {
+            "name": "ssh-keys",
+            "secret": {
+              "secretName": "ssh-keys",
+              "defaultMode": 420
+            }
+          },
+          {
+            "name": "gcloud-keys",
+            "secret": {
+              "secretName": "gcloud-keys",
+              "defaultMode": 420
+            }
+          },
+          {
+            "name": "docker-sock",
+            "hostPath": {
+              "path": "/var/run/docker.sock",
+              "type": ""
+            }
+          },
+          {
+            "name": "docker-bin",
+            "hostPath": {
+              "path": "/usr/bin/docker",
+              "type": ""
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "gocd-agent",
+            "image": "test",
+            "env": [
+              {
+                "name": "GO_SERVER",
+                "value": "gocd-server"
+              },
+              {
+                "name": "AGENT_KEY",
+                "value": "something"
+              },
+              {
+                "name": "AGENT_RESOURCES",
+                "value": "${AGENT_RESOURCES}"
+              },
+              {
+                "name": "DOCKER_GID_ON_HOST",
+                "value": "107"
+              }
+            ],
+            "resources": {
+              "limits": {
+                "cpu": "1",
+                "memory": "1Gi"
+              },
+              "requests": {
+                "cpu": "10m",
+                "memory": "512Mi"
+              }
+            },
+            "volumeMounts": [
+              {
+                "name": "ssh-keys",
+                "mountPath": "/var/go/.ssh"
+              },
+              {
+                "name": "gcloud-keys",
+                "mountPath": "/var/go/.gcloud"
+              },
+              {
+                "name": "docker-sock",
+                "mountPath": "/var/run/docker.sock"
+              },
+              {
+                "name": "docker-bin",
+                "mountPath": "/usr/bin/docker"
+              }
+            ],
+            "terminationMessagePath": "/dev/termination-log",     // x x x
+            "terminationMessagePolicy": "File",         // x x x
+            "imagePullPolicy": "Always"
+          }
+        ],
+        "restartPolicy": "Always",              //TODO x x x    or to be captured in metadata
+        "terminationGracePeriodSeconds": 30,    // x x x
+        "dnsPolicy": "ClusterFirst",            // x x x
+        "securityContext": {},                    // x x x
+        "schedulerName": "default-scheduler"          // x x x
+      }
+    },
+    "strategy": {        // x x x
+      "type": "Recreate"
+    },
+    "revisionHistoryLimit": 25     //TODO x x x    or to be captured in ReplicaSet
+  },
+  "status": {
+    "observedGeneration": 2,
+    "replicas": 2,                  //TODO capture this
+    "updatedReplicas": 2,         //TODO   x x x or capture ??????
+    "unavailableReplicas": 2,     //TODO
+    "conditions": [
+      {
+        "type": "Available",
+        "status": "False",
+        "lastUpdateTime": "2017-12-20T09:46:25Z",
+        "lastTransitionTime": "2017-12-20T09:46:25Z",
+        "reason": "MinimumReplicasUnavailable",                    //TODO capture resson in Deployment
+        "message": "Deployment does not have minimum availability."      //TODO
+      }
+    ]
+  }
+}
