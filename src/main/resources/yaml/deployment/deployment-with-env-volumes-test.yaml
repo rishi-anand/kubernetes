@@ -6,7 +6,7 @@ spec:
   replicas: 2
   strategy:
     type: Recreate
-  revisionHistoryLimit: 25
+  revisionHistoryLimit: 25 #map
   selector:
     matchLabels:
       app: gocd-agent-test
@@ -22,6 +22,8 @@ spec:
       - name: gocd-agent
         image: test
         imagePullPolicy: Always
+
+
         volumeMounts:
         - name: ssh-keys
           mountPath: /var/go/.ssh
@@ -31,6 +33,8 @@ spec:
           mountPath: /var/run/docker.sock
         - name: docker-bin
           mountPath: /usr/bin/docker
+
+
         env:
         - name: "GO_SERVER"
           value: "gocd-server"
@@ -40,6 +44,8 @@ spec:
           value: "${AGENT_RESOURCES}"
         - name: "DOCKER_GID_ON_HOST"
           value: "107"
+
+
         resources:
           limits:
             cpu: 1000m
@@ -47,6 +53,8 @@ spec:
           requests:
             cpu: 10m
             memory: 512Mi
+
+#part of deployment
       volumes:
       - name: ssh-keys
         secret:

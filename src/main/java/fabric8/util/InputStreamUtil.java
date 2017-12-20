@@ -8,7 +8,7 @@ import java.io.InputStreamReader;
 public class InputStreamUtil {
 
     // convert InputStream to String
-    private static String convertToString(InputStream is) {
+    public static String convertToString(InputStream is) {
 
         BufferedReader br = null;
         StringBuilder sb = new StringBuilder();
