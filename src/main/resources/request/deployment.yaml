@@ -4,10 +4,10 @@ metadata:
   namespace: default
   name: gocd-agent-test
 spec:
-  replicas: 2           # ReplicaSerCreateTemplate
-  strategy:              # ReplicaSerCreateTemplate
-    type: Recreate        # ReplicaSerCreateTemplate
-  revisionHistoryLimit: 25  # ReplicaSerCreateTemplate
+  replicas: 2           # ReplicaSetCreateTemplate
+  strategy:              # ReplicaSetCreateTemplate
+    type: Recreate        # ReplicaSetCreateTemplate
+  revisionHistoryLimit: 25  # ReplicaSetCreateTemplate
   selector:
     matchLabels:
       app: gocd-agent-test

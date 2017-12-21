@@ -127,12 +127,12 @@
         "imagePullPolicy": "Always"
       }
     ],
-    "restartPolicy": "Always",        // TODO to decide (can it be in metadata map)
-    "terminationGracePeriodSeconds": 30,  //
-    "dnsPolicy": "ClusterFirst",      //
-    "serviceAccountName": "default",   //TODO credential information ??
-    "serviceAccount": "default",
-    "nodeName": "gke-rishi-k8-cluster-default-pool-6ca1467e-w5km",   // to decide (can it be in map)
+    "restartPolicy": "Always",        //  x x x
+    "terminationGracePeriodSeconds": 30,  // x x x
+    "dnsPolicy": "ClusterFirst",      // x x x
+    "serviceAccountName": "default",   // x x x
+    "serviceAccount": "default",        // x x x
+    "nodeName": "gke-rishi-k8-cluster-default-pool-6ca1467e-w5km",   // in map
     "securityContext": {},                  // x x x
     "schedulerName": "default-scheduler",   // x x x
     "tolerations": [      // x x x
@@ -174,7 +174,8 @@
         "lastTransitionTime": "2017-12-20T09:49:35Z"
       }
     ],
-    "hostIP": "10.240.0.31",   //TODO decide how to capture endpoint at pod level
+    "hostIP": "10.240.0.31",
+    "podIP": "10.20.3.8",    //TODO decide how to capture endpoint at pod level
     "startTime": "2017-12-20T09:49:35Z",
     "containerStatuses": [
       {

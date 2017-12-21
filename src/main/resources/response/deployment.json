@@ -130,11 +130,11 @@
     "strategy": {        // x x x
       "type": "Recreate"
     },
-    "revisionHistoryLimit": 25     //TODO x x x    or to be captured in ReplicaSet
+    "revisionHistoryLimit": 25     //TODO x x x    or to be captured in ReplicaSet  ()
   },
   "status": {
     "observedGeneration": 2,
-    "replicas": 2,                  //TODO capture this in (Deployment || ReplicaSet)
+    "replicas": 2,                  //TODO capture this in Deployment -- Y
     "updatedReplicas": 2,         //TODO   x x x or capture ??????
     "unavailableReplicas": 2,     //TODO
     "conditions": [
