@@ -1,0 +1,13 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: pubsub
+spec:
+  template:
+    metadata:
+      labels:
+        app: pubsub
+    spec:
+      containers:
+      - name: subscriber
+        image: gcr.io/google-samples/pubsub-sample:v1

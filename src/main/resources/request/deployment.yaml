@@ -70,6 +70,10 @@ spec:
       - name: docker-bin
         hostPath:
           path: /usr/bin/docker
+      - name: wordpress-persistent-storage
+        gcePersistentDisk:
+          pdName: wordpress-disk
+          fsType: ext4
 
 
 
