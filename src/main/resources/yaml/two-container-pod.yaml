@@ -23,4 +23,4 @@ spec:
     - name: shared-data
       mountPath: /pod-data
     command: ["/bin/sh"]
-    args: ["-c", "echo Q&A? > /pod-data/index.html", "echo Thanks for joining demo :) > /pod-data/index.html"]
+    args: ["-c", "echo Q&A? Thanks for joining demo. > /pod-data/index.html"]
