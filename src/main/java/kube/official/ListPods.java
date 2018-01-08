@@ -36,7 +36,6 @@ public class ListPods {
         AppsV1beta1DeploymentList deploymentList = api1.listNamespacedDeployment("default", null, null, null, null, null, null);
         System.out.println(String.format("deploymentList : %s", gson.toJson(deploymentList)));
 
-
         AppsV1beta1Deployment deployment = api1.readNamespacedDeployment("nginx-deployment", "default", null, null, null);
 
         System.out.println(String.format("deployment : %s", gson.toJson(deployment)));

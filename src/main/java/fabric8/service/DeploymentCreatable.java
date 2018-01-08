@@ -5,6 +5,8 @@ import fabric8.authentication.AuthenticationService;
 import fabric8.authentication.KubernetesCredential;
 import io.fabric8.kubernetes.api.model.Event;
 import io.fabric8.kubernetes.api.model.Pod;
+import io.fabric8.kubernetes.api.model.Secret;
+import io.fabric8.kubernetes.api.model.Service;
 import io.fabric8.kubernetes.api.model.extensions.Deployment;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClientException;
@@ -49,18 +51,43 @@ public class DeploymentCreatable {
 
     private static void test(KubernetesClient client){
 
+        Gson gson = new Gson();
+
         String fileLocation = "/yaml/deployment/deployment-with-env-volumes-test.yaml";
         fileLocation = "/yaml/deployment-nginx.yml";
+        fileLocation = "/request/deployment.yaml";
+        fileLocation = "/yaml/kubernetes-engine-samples/wordpress-persistent-disks/mysql.yaml";
         InputStream inputStream = ListPods.class.getResourceAsStream(fileLocation);
         Deployment deploymentCreatable = client.extensions().deployments().load(inputStream).get();
-        _logger.info("deployment :", new Gson().toJson(deploymentCreatable));
+
+        Deployment deploymentCreated = client.extensions().deployments().createOrReplace(deploymentCreatable);
+        _logger.info("deployment :", gson.toJson(deploymentCreatable), gson.toJson(deploymentCreated));
 
         String fileLocationPod = "/yaml/deployment/deployment-with-env-volumes-test.yaml";
         fileLocationPod = "/yaml/two-container-pod.yaml";
+        //fileLocationPod = "/yaml/kubernetes-engine-samples/cloudsql/postgres_deployment.yaml";
         InputStream inputStreamPod = ListPods.class.getResourceAsStream(fileLocationPod);
         Pod pod = client.pods().load(inputStreamPod).get();
 
-        _logger.info("pod :", new Gson().toJson(pod));
+
+
+        String secretFileLocationPod = "/yaml/deployment/deployment-with-env-volumes-test.yaml";
+        secretFileLocationPod = "/yaml/kubernetes-engine-samples/wordpress-persistent-disks/mysql-secret.yaml";
+        //fileLocationPod = "/yaml/kubernetes-engine-samples/cloudsql/postgres_deployment.yaml";
+        InputStream sinputStreamPod = ListPods.class.getResourceAsStream(secretFileLocationPod);
+
+        Secret secret = client.secrets().load(sinputStreamPod).get();
+
+
+
+        String serviceFileLocationPod = "/yaml/deployment/deployment-with-env-volumes-test.yaml";
+        serviceFileLocationPod = "/yaml/kubernetes-engine-samples/wordpress-persistent-disks/mysql-service.yaml";
+        //fileLocationPod = "/yaml/kubernetes-engine-samples/cloudsql/postgres_deployment.yaml";
+        InputStream serviceInputStreamPod = ListPods.class.getResourceAsStream(serviceFileLocationPod);
+
+        Service service = client.services().load(serviceInputStreamPod).get();
+
+        _logger.info("pod :", gson.toJson(pod), gson.toJson(secret), gson.toJson(service));
 
 
 

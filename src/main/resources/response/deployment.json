@@ -134,8 +134,8 @@
   },
   "status": {
     "observedGeneration": 2,
-    "replicas": 2,                  //TODO capture this in Deployment -- Y
-    "updatedReplicas": 2,         //TODO   x x x or capture ??????
+    "replicas": 10,                  //TODO capture this in Deployment -- Y
+    "updatedReplicas": 3,         //TODO   x x x or capture ??????
     "unavailableReplicas": 2,     //TODO
     "conditions": [
       {
