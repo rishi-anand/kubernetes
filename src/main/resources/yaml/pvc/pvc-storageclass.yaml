@@ -1,0 +1,11 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: slzc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: gold
+  resources:
+    requests:
+      storage: 3.7Gi

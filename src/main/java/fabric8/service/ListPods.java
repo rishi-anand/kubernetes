@@ -4,7 +4,9 @@ import fabric8.authentication.AuthenticationService;
 import fabric8.authentication.KubernetesCredential;
 import fabric8.util.InputStreamUtil;
 import fabric8.util.KubernetesErrorUtil;
+import io.fabric8.kubernetes.api.model.PersistentVolumeClaim;
 import io.fabric8.kubernetes.api.model.extensions.Deployment;
+import io.fabric8.kubernetes.api.model.extensions.ReplicaSet;
 import io.fabric8.kubernetes.client.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +26,7 @@ public class ListPods {
             KubernetesClient client = new AuthenticationService(new KubernetesCredential().rishiGCEContainerK8())
                     .authenticate();
 
-            listPods(client);
+            editReplicaSet(client);
 
         } catch (KubernetesClientException kce) {
             logger.error("rishi KubernetesClientException : {}, {}", KubernetesErrorUtil.getErrorMsg(kce), kce);
@@ -66,5 +68,29 @@ public class ListPods {
             e.printStackTrace();
         }
     }
+
+    private static void editReplicaSet(KubernetesClient client) {
+        String namespace = "default";
+//        ReplicaSet replicaSet = client.extensions().replicaSets().inNamespace(namespace)
+//                .withLabel("test", "21nov").list().getItems().get(0);
+//
+//        System.out.println(replicaSet);
+//
+//        replicaSet.getSpec().setReplicas(2);
+//
+//        ReplicaSet replicaSet1 = client.extensions().replicaSets().createOrReplace(replicaSet);
+//        System.out.println(replicaSet1);
+
+//        Deployment deployment = client.extensions().deployments().inNamespace(namespace)
+//                .withName("nginx-deployment").scale(-1, true);
+//
+//
+//        System.out.println(deployment);
+
+        PersistentVolumeClaim claim = client.persistentVolumeClaims().inNamespace(namespace).withName("slzc").get();
+        System.out.println(claim);
+
+    }
+
 
 }

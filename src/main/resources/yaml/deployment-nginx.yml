@@ -9,7 +9,7 @@ metadata:
     test: 21nov
     new: test
 spec:
-  replicas: 30
+  replicas: 3
   selector:
     matchLabels:
       app: nginx
@@ -25,6 +25,6 @@ spec:
     spec:
       containers:
       - name: nginx
-        image: nginx:latest
+        image: nginx:1.10.2
         ports:
         - containerPort: 80

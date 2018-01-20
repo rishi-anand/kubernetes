@@ -3,11 +3,10 @@ package fabric8.service;
 import com.google.gson.Gson;
 import fabric8.authentication.AuthenticationService;
 import fabric8.authentication.KubernetesCredential;
-import io.fabric8.kubernetes.api.model.Event;
-import io.fabric8.kubernetes.api.model.Pod;
-import io.fabric8.kubernetes.api.model.Secret;
-import io.fabric8.kubernetes.api.model.Service;
+import io.fabric8.kubernetes.api.model.*;
+import io.fabric8.kubernetes.api.model.apiextensions.CustomResourceDefinition;
 import io.fabric8.kubernetes.api.model.extensions.Deployment;
+import io.fabric8.kubernetes.client.CustomResource;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClientException;
 import io.fabric8.kubernetes.client.Watcher;
@@ -60,8 +59,8 @@ public class DeploymentCreatable {
         InputStream inputStream = ListPods.class.getResourceAsStream(fileLocation);
         Deployment deploymentCreatable = client.extensions().deployments().load(inputStream).get();
 
-        Deployment deploymentCreated = client.extensions().deployments().createOrReplace(deploymentCreatable);
-        _logger.info("deployment :", gson.toJson(deploymentCreatable), gson.toJson(deploymentCreated));
+//        Deployment deploymentCreated = client.extensions().deployments().createOrReplace(deploymentCreatable);
+//        _logger.info("deployment :", gson.toJson(deploymentCreatable), gson.toJson(deploymentCreated));
 
         String fileLocationPod = "/yaml/deployment/deployment-with-env-volumes-test.yaml";
         fileLocationPod = "/yaml/two-container-pod.yaml";
@@ -70,6 +69,7 @@ public class DeploymentCreatable {
         Pod pod = client.pods().load(inputStreamPod).get();
 
 
+        PodList pod1 = client.pods().inNamespace("default").withField("phase", "Running").list();
 
         String secretFileLocationPod = "/yaml/deployment/deployment-with-env-volumes-test.yaml";
         secretFileLocationPod = "/yaml/kubernetes-engine-samples/wordpress-persistent-disks/mysql-secret.yaml";
@@ -87,9 +87,9 @@ public class DeploymentCreatable {
 
         Service service = client.services().load(serviceInputStreamPod).get();
 
-        _logger.info("pod :", gson.toJson(pod), gson.toJson(secret), gson.toJson(service));
+        _logger.info("pod :", gson.toJson(pod), gson.toJson(secret), gson.toJson(service), pod1);
 
-
+        customResource(client);
 
         Pod p = new Pod();
 
@@ -364,6 +364,22 @@ public class DeploymentCreatable {
             _logger.info("DELETE Deployment '{}' is deleted - {} ", name, isDeleted);
         }
 
+    }
+
+    private static void customResource(KubernetesClient client){
+        CustomResourceDefinition def = new CustomResourceDefinition();
+        def.setKind("StorageClass");
+        def.setApiVersion("storage.k8s.io/v1");
+
+        ObjectMeta objectMeta = new ObjectMeta();
+        objectMeta.setName("gold");
+        def.setMetadata(objectMeta);
+        CustomResourceDefinition def3 = client.customResourceDefinitions().withName("gold").get();
+        HasMetadata def4 = client.customResources(def, null, null, null).withName("gold").get();
+        _logger.info("DELETE Deployment '{}' is deleted - {} ", def3, def4);
+        client.resource("StorageClass").get();
+
+        //client.extensions().networkPolicies().
     }
 
     private static void subscribeForEvent(KubernetesClient client){
