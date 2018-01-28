@@ -75,6 +75,18 @@ public class KubernetesCredential {
                 .build();
     }
 
+    public Config subbuGCEContainerXpnServiceNPBetaK8(){
+        url = (String) jsonObject.get("URL_SUBBU_GCE_XPN_NP_BETA_CONATINER");
+        username = (String) jsonObject.get("USERNAME_SUBBU_GCE_XPN_NP_BETA_CONATINER");
+        password = (String) jsonObject.get("PASSWORD_SUBBU_GCE_XPN_NP_BETA_CONATINER");
+
+        return new ConfigBuilder().withMasterUrl(url)
+                .withUsername(username)
+                .withPassword(password)
+                .withTrustCerts(true)
+                .build();
+    }
+
     public Config subbuGCEContainerK8(){
         url = (String) jsonObject.get("URL_SUBBU_GCE_CONATINER");
         username = (String) jsonObject.get("USERNAME_SUBBU_GCE_CONATINER");

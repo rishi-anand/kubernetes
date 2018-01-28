@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: NetworkPolicy
+metadata:
+  name: mysql2
+  namespace: default
+spec:
+  podSelector:
+    matchLabels:
+      app: mysql2
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: wordpress2
+    ports:
+    - protocol: TCP
+      port: 3306

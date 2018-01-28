@@ -5,6 +5,7 @@ import fabric8.authentication.KubernetesCredential;
 import fabric8.util.InputStreamUtil;
 import fabric8.util.KubernetesErrorUtil;
 import io.fabric8.kubernetes.api.model.PersistentVolumeClaim;
+import io.fabric8.kubernetes.api.model.Pod;
 import io.fabric8.kubernetes.api.model.extensions.Deployment;
 import io.fabric8.kubernetes.api.model.extensions.ReplicaSet;
 import io.fabric8.kubernetes.client.*;
@@ -12,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
+import java.net.URL;
 
 
 public class ListPods {
@@ -23,7 +25,7 @@ public class ListPods {
     public static void main(String[] args) throws Exception{
 
         try {
-            KubernetesClient client = new AuthenticationService(new KubernetesCredential().rishiGCEContainerK8())
+            KubernetesClient client = new AuthenticationService(new KubernetesCredential().subbuGCEContainerXpnServiceNPBetaK8())
                     .authenticate();
 
             editReplicaSet(client);
@@ -70,7 +72,8 @@ public class ListPods {
     }
 
     private static void editReplicaSet(KubernetesClient client) {
-        String namespace = "default";
+        try {
+            String namespace = "default";
 //        ReplicaSet replicaSet = client.extensions().replicaSets().inNamespace(namespace)
 //                .withLabel("test", "21nov").list().getItems().get(0);
 //
@@ -87,8 +90,22 @@ public class ListPods {
 //
 //        System.out.println(deployment);
 
-        PersistentVolumeClaim claim = client.persistentVolumeClaims().inNamespace(namespace).withName("slzc").get();
-        System.out.println(claim);
+            String abc = "abc";
+            String def = null;
+
+            Pod pod = client.pods().inNamespace(namespace)
+                    .withName("wordpress-mysql-e40172-77c654b57f-j7p46").get();
+
+            System.out.println(pod);
+            URL url = new URL("https://raw.githubusercontent.com/rishi-anand/kubernetes/master/src/main/resources/yaml/deployment-nginx.yml");
+
+            Deployment pod1 = client.extensions().deployments().load(url).get();
+            System.out.println(pod1);
+            PersistentVolumeClaim claim = client.persistentVolumeClaims().inNamespace(namespace).withName("mysql-pv-claim").get();
+            System.out.println(claim);
+        } catch (Exception e){
+
+        }
 
     }
 
