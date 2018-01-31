@@ -9,7 +9,7 @@ metadata:
     test: 21nov
     new: test
 spec:
-  replicas: 1
+  replicas: 20
   selector:
     matchLabels:
       app: nginx

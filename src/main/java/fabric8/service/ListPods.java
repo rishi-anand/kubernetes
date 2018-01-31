@@ -14,6 +14,8 @@ import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ListPods {
@@ -25,6 +27,7 @@ public class ListPods {
     public static void main(String[] args) throws Exception{
 
         try {
+
             KubernetesClient client = new AuthenticationService(new KubernetesCredential().subbuGCEContainerXpnServiceNPBetaK8())
                     .authenticate();
 
@@ -98,6 +101,9 @@ public class ListPods {
 
             System.out.println(pod);
             URL url = new URL("https://raw.githubusercontent.com/rishi-anand/kubernetes/master/src/main/resources/yaml/deployment-nginx.yml");
+
+            List<String> test = new ArrayList<String>();
+            test.add("wordpress-mysql-e40172-77c654b57f-j7p46");
 
             Deployment pod1 = client.extensions().deployments().load(url).get();
             System.out.println(pod1);

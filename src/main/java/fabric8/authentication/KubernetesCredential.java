@@ -82,7 +82,7 @@ public class KubernetesCredential {
 
         return new ConfigBuilder().withMasterUrl(url)
                 .withUsername(username)
-                .withPassword(password)
+                .withPassword(password + "jndjk")
                 .withTrustCerts(true)
                 .build();
     }
@@ -94,7 +94,7 @@ public class KubernetesCredential {
 
         return new ConfigBuilder().withMasterUrl(url)
                 .withUsername(username)
-                .withPassword(password)
+                .withPassword(password + "token")
                 .withTrustCerts(true)
                 .build();
     }
