@@ -24,7 +24,7 @@ public class ListVolumes {
 
         CoreV1Api api = new CoreV1Api();
 
-        V1PersistentVolumeList volumeList = api.listPersistentVolume(null, null, null, null, null, null);
+        V1PersistentVolumeList volumeList = api.listPersistentVolume(null, null, null, null, null, null, null, null, null);
 
         System.out.println(String.format("Listing %d volumes... ", volumeList.getItems().size()));
 

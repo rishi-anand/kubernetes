@@ -1,11 +1,9 @@
 package fabric8.service;
 
-import fabric8.authentication.KubernetesCredential;
 import fabric8.authentication.AuthenticationService;
-import io.fabric8.kubernetes.api.model.*;
-import io.fabric8.kubernetes.api.model.extensions.Deployment;
-import io.fabric8.kubernetes.api.model.extensions.DeploymentSpec;
-import io.fabric8.kubernetes.api.model.extensions.DeploymentSpecBuilder;
+import fabric8.authentication.KubernetesCredential;
+import io.fabric8.kubernetes.api.model.Service;
+import io.fabric8.kubernetes.api.model.extensions.NetworkPolicy;
 import io.fabric8.kubernetes.client.KubernetesClient;
 import io.fabric8.kubernetes.client.KubernetesClientException;
 
@@ -14,13 +12,19 @@ public class ListServices {
     public static void main(String[] args) {
 
         try {
-            final KubernetesClient client = new AuthenticationService(new KubernetesCredential().kubernetesHAGCE())
+            final KubernetesClient client = new AuthenticationService(new KubernetesCredential().shubhamAWSK8())
                     .authenticate();
 
-            System.out.println(client.services().list());
+            service(client);
 
         } catch (KubernetesClientException e) {
             e.printStackTrace();
         }
     }
+
+    private static void service(KubernetesClient client){
+        Service service = client.services().inNamespace("default").withName("wordpress-rishi").get();
+        System.out.println(service);
+    }
+
 }

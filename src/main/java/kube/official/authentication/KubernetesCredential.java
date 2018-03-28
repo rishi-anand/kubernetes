@@ -1,12 +1,10 @@
-package fabric8.authentication;
+package kube.official.authentication;
 
-import io.fabric8.kubernetes.client.Config;
-import io.fabric8.kubernetes.client.ConfigBuilder;
+import io.kubernetes.client.ApiClient;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.io.FileReader;
-import java.util.Properties;
 
 
 public class KubernetesCredential {
@@ -63,64 +61,43 @@ public class KubernetesCredential {
         this.url = url;
     }
 
-    public Config rishiGCEContainerK8(){
+    public ApiClient rishiGCEContainerK8(){
         url = (String) jsonObject.get("URL_RISHI_GCE_CONATINER");
         username = (String) jsonObject.get("USERNAME_RISHI_GCE_CONATINER");
         password = (String) jsonObject.get("PASSWORD_RISHI_GCE_CONATINER");
-
-        return new ConfigBuilder().withMasterUrl(url)
-                .withUsername(username)
-                .withPassword(password)
-                .withTrustCerts(true)
-                .build();
+        return io.kubernetes.client.util.Config.fromUserPassword(url, username, password, false);
     }
 
-    public Config shubhamAWSK8(){
+    public ApiClient shubhamAWSK8(){
         url = (String) jsonObject.get("URL_SHUBHAM_AWS_CONATINER");
         username = (String) jsonObject.get("USERNAME_SHUBHAM_AWS_CONATINER");
         password = (String) jsonObject.get("PASSWORD_SHUBHAM_AWS_CONATINER");
 
-        return new ConfigBuilder().withMasterUrl(url)
-                .withUsername(username)
-                .withPassword(password)
-                .withTrustCerts(true)
-                .build();
+        return io.kubernetes.client.util.Config.fromUserPassword(url, username, password, false);
     }
 
-    public Config subbuGCEContainerXpnServiceNPBetaK8(){
+    public ApiClient subbuGCEContainerXpnServiceNPBetaK8(){
         url = (String) jsonObject.get("URL_SUBBU_GCE_XPN_NP_BETA_CONATINER");
         username = (String) jsonObject.get("USERNAME_SUBBU_GCE_XPN_NP_BETA_CONATINER");
         password = (String) jsonObject.get("PASSWORD_SUBBU_GCE_XPN_NP_BETA_CONATINER");
 
-        return new ConfigBuilder().withMasterUrl(url)
-                .withUsername(username)
-                .withPassword(password + "jndjk")
-                .withTrustCerts(true)
-                .build();
+        return io.kubernetes.client.util.Config.fromUserPassword(url, username, password, false);
     }
 
-    public Config subbuGCEContainerK8(){
+    public ApiClient subbuGCEContainerK8(){
         url = (String) jsonObject.get("URL_SUBBU_GCE_CONATINER");
         username = (String) jsonObject.get("USERNAME_SUBBU_GCE_CONATINER");
         password = (String) jsonObject.get("PASSWORD_SUBBU_GCE_CONATINER");
 
-        return new ConfigBuilder().withMasterUrl(url)
-                .withUsername(username)
-                .withPassword(password + "token")
-                .withTrustCerts(true)
-                .build();
+        return io.kubernetes.client.util.Config.fromUserPassword(url, username, password, false);
     }
 
-    public Config kubernetesHAGCE() {
+    public ApiClient kubernetesHAGCE() {
         try {
             url = (String) jsonObject.get("URL_HA_GCE");
             oathToken = (String) jsonObject.get("TOKEN_HA_GCE");
 
-            return new ConfigBuilder()
-                    .withMasterUrl(url)
-                    .withTrustCerts(true)
-                    .withOauthToken(oathToken.replaceAll("(\\r|\\n)", ""))
-                    .build();
+            return io.kubernetes.client.util.Config.fromToken(url, oathToken, false);
         } catch (Exception e){
 
         }

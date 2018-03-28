@@ -25,7 +25,7 @@ public class ListReplicationControllers {
         CoreV1Api api = new CoreV1Api();
 
 
-        V1ReplicationControllerList replicationControllerList = api.listReplicationControllerForAllNamespaces(null, null, null, null, null, null);
+        V1ReplicationControllerList replicationControllerList = api.listReplicationControllerForAllNamespaces(null, null, null, null, null, null, null, null, null);
 
         System.out.println(String.format("Listing %d replication controllers... ", replicationControllerList.getItems().size()));
 
