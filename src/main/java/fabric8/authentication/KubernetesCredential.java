@@ -126,4 +126,20 @@ public class KubernetesCredential {
         }
         return null;
     }
+
+    public Config rishiGCEContainerK8_rishi_namespace() {
+        try {
+            url = (String) jsonObject.get("URL_RISHI_GCE_CONATINER_NAMESPACED_RISHI");
+            oathToken = (String) jsonObject.get("URL_RISHI_GCE_CONATINER_NAMESPACED_RISHI_TOKEN");
+
+            return new ConfigBuilder()
+                    .withMasterUrl(url)
+                    .withTrustCerts(true)
+                    .withOauthToken(oathToken.replaceAll("(\\r|\\n)", ""))
+                    .build();
+        } catch (Exception e){
+
+        }
+        return null;
+    }
 }

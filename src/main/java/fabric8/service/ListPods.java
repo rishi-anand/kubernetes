@@ -28,10 +28,12 @@ public class ListPods {
 
         try {
 
-            KubernetesClient client = new AuthenticationService(new KubernetesCredential().subbuGCEContainerXpnServiceNPBetaK8())
+            KubernetesClient client = new AuthenticationService(new KubernetesCredential().rishiGCEContainerK8_rishi_namespace())
                     .authenticate();
 
-            editReplicaSet(client);
+            //editReplicaSet(client);
+
+            listPods(client);
 
         } catch (KubernetesClientException kce) {
             logger.error("rishi KubernetesClientException : {}, {}", KubernetesErrorUtil.getErrorMsg(kce), kce);
@@ -44,7 +46,7 @@ public class ListPods {
     private static void listPods(KubernetesClient client){
         System.out.println(
                 "PODS : " + client.pods()
-                        .inNamespace("default")
+                        .inNamespace("suman")
                         .list()
         );
     }
