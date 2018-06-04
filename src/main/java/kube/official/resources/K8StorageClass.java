@@ -9,12 +9,11 @@ import io.kubernetes.client.apis.NetworkingV1Api;
 import io.kubernetes.client.models.AppsV1beta1DeploymentList;
 import io.kubernetes.client.models.V1NetworkPolicy;
 import io.kubernetes.client.models.V1NetworkPolicyList;
-import io.kubernetes.client.proto.V1Networking;
 import kube.official.authentication.KubernetesCredential;
 
 import java.io.IOException;
 
-public class K8NetworkPolicy {
+public class K8StorageClass {
 
     //NetworkingV1Api api2 for network policy
 

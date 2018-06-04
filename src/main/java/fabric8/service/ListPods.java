@@ -6,6 +6,7 @@ import fabric8.util.InputStreamUtil;
 import fabric8.util.KubernetesErrorUtil;
 import io.fabric8.kubernetes.api.model.PersistentVolumeClaim;
 import io.fabric8.kubernetes.api.model.Pod;
+import io.fabric8.kubernetes.api.model.PodList;
 import io.fabric8.kubernetes.api.model.extensions.Deployment;
 import io.fabric8.kubernetes.api.model.extensions.ReplicaSet;
 import io.fabric8.kubernetes.client.*;
@@ -33,7 +34,8 @@ public class ListPods {
 
             //editReplicaSet(client);
 
-            listPods(client);
+            //listPods(client);
+            updateRc(client);
 
         } catch (KubernetesClientException kce) {
             logger.error("rishi KubernetesClientException : {}, {}", KubernetesErrorUtil.getErrorMsg(kce), kce);
@@ -44,11 +46,21 @@ public class ListPods {
     }
 
     private static void listPods(KubernetesClient client){
+        PodList podList = client.pods()
+                .inAnyNamespace()
+                .list();
         System.out.println(
                 "PODS : " + client.pods()
                         .inNamespace("suman")
                         .list()
         );
+    }
+
+    private static void updateRc(KubernetesClient client){
+        System.out.println("updating rollinh");
+       // client.replicationControllers().inNamespace("default").withName("my-nginx").rolling().updateImage("nginx:latest");
+        client.extensions().replicaSets().inNamespace("default").withName("fgrg-73-nginxcontainer1-74-97775d4d8").rolling().updateImage("nginx:latest");
+        System.out.println("done");
     }
 
     private static void updatePod(KubernetesClient client){

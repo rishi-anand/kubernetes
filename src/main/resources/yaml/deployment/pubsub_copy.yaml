@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kubernetes-challenge-rishi
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        completed: done
+    spec:
+      containers:
+        - name: kubernetes-challenge
+          image: rishianand/k8s:base
+          ports:
+            - containerPort: 4000
+          env:
+            - name: "MY_NAME"
+              value: "Rishi Anand"
+          command: ["/bin/sh"]
+          args: ["-c", "echo $MY_NAME"]

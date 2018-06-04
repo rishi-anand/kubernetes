@@ -5,6 +5,7 @@ import io.kubernetes.client.ApiClient;
 import io.kubernetes.client.ApiException;
 import io.kubernetes.client.Configuration;
 import io.kubernetes.client.apis.AppsV1beta1Api;
+import io.kubernetes.client.apis.AppsV1beta2Api;
 import io.kubernetes.client.apis.CoreV1Api;
 import io.kubernetes.client.models.AppsV1beta1Deployment;
 import io.kubernetes.client.models.AppsV1beta1DeploymentList;
@@ -30,6 +31,7 @@ public class ListPods {
         //Client for beta has deployments.. so with official SDK client creation will be like openstack v2/v3
         //With fabric8 same client should work...
         AppsV1beta1Api api1 = new AppsV1beta1Api();
+        AppsV1beta2Api api2 = new AppsV1beta2Api();
         AppsV1beta1DeploymentList deploymentList = api1.listNamespacedDeployment("default", null, null, null, null, null, null, null, null, null);
         System.out.println(String.format("deploymentList : %s", gson.toJson(deploymentList)));
 

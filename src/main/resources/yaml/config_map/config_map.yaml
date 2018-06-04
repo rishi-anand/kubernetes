@@ -1,0 +1,7 @@
+ apiVersion: v1
+ kind: ConfigMap
+ metadata:
+   name: kubernetes-challenge-config-map
+   namespace: default
+ data:
+   MY_NAME: Rishi Anand
