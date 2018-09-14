@@ -1,12 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: kubernetes-ip-test
+  name: demo-service-fetching
+  namespace: default
   labels:
-    completed: done
+    cliqr: test
 spec:
   ports:
     - port: 4000
   selector:
-    completed: done
+    tier: webservicecontainer1
+    cliqr: test
   type: LoadBalancer

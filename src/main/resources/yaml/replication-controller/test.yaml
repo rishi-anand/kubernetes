@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: my-nginx-2-containers
+spec:
+  replicas: 5
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.10.2
+        ports:
+        - containerPort: 80
+      - name: rss-reader
+        image: nickchase/rss-php-nginx:v1
+        ports:
+        - containerPort: 80

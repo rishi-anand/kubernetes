@@ -1,11 +1,11 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: glusterclaim
+  name: glusterclaimabc
 spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: gold
   resources:
     requests:
-      storage: 3.7Gi
+      storage: 4

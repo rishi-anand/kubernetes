@@ -6,6 +6,10 @@ metadata:
     name: web
     app: demo
 spec:
+  volumes:
+    - name: task-pv-storage
+      persistentVolumeClaim:
+       claimName: glusterclaimabc
   containers:
     - name: redis
       image: redis
@@ -13,6 +17,9 @@ spec:
         - containerPort: 6379
           name: redis
           protocol: TCP
+      volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: task-pv-storage
     - name: python
       image: janakiramm/py-red
       env:
@@ -22,3 +29,6 @@ spec:
         - containerPort: 5000
           name: http
           protocol: TCP
+      volumeMounts:
+        - mountPath: "/usr/share/nginx"
+          name: task-pv-storage

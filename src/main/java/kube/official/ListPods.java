@@ -7,10 +7,8 @@ import io.kubernetes.client.Configuration;
 import io.kubernetes.client.apis.AppsV1beta1Api;
 import io.kubernetes.client.apis.AppsV1beta2Api;
 import io.kubernetes.client.apis.CoreV1Api;
-import io.kubernetes.client.models.AppsV1beta1Deployment;
-import io.kubernetes.client.models.AppsV1beta1DeploymentList;
-import io.kubernetes.client.models.V1Pod;
-import io.kubernetes.client.models.V1PodList;
+import io.kubernetes.client.custom.IntOrString;
+import io.kubernetes.client.models.*;
 import io.kubernetes.client.util.Config;
 import kube.official.authentication.KubernetesCredential;
 
