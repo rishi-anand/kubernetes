@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Deployment
+metadata:
+  name: google-metrics
+spec:
+  containers:
+  - name: google
+    image: devhub-docker.cisco.com/cloudcenter-dev-docker/custom/cloudcenter/rishi/google-matrics:latest
+  imagePullSecrets:
+  - name: suite-image-pull-secret
+
