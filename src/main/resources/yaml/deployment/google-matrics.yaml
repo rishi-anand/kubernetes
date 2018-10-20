@@ -14,3 +14,5 @@ spec:
           image: dockerhub.cisco.com/cloudcenter-dev-docker/custom/cloudcenter/rishi/google-matrics:latest
           ports:
             - containerPort: 80
+          imagePullSecrets:
+            - name: suite-image-pull-secret
