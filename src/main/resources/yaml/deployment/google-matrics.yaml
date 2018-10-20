@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: google-matrics
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: webpb
+    spec:
+      containers:
+        - name: google
+          image: dockerhub.cisco.com/cloudcenter-dev-docker/custom/cloudcenter/rishi/google-matrics:latest
+          ports:
+            - containerPort: 80

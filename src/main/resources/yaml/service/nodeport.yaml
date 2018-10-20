@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: kubernetes-challenge-node-port
+  name: k8s-nodeport
   labels:
-    completed: done
+    app: cloudcenter-cloudbladelp-kubernetes-11ce74
 spec:
   ports:
     - port: 4000
   selector:
-    completed: done
+    app: cloudcenter-cloudbladelp-kubernetes-11ce74
   type: NodePort

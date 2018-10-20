@@ -1,8 +1,8 @@
 kind: Role
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
-  namespace: tebhanda
-  name: tebhanda_admin_role
+  namespace: risanand
+  name: admin_role
 rules:
 - apiGroups: ["*"] # "" indicates the core API group
   resources: ["*"]
