@@ -1,0 +1,38 @@
+{
+  "apiVersion": "v1",
+  "kind": "Service",
+  "metadata": {
+    "labels": {
+      "app": "cloudcenter-cloudbladelp-google-90c29",
+      "debug": "LoadBalancer"
+    },
+    "name": "api-access-service-debug",
+    "namespace": "cisco"
+  },
+  "spec": {
+    "ports": [
+      {
+        "name": "https",
+        "port": 8443,
+        "protocol": "TCP",
+        "targetPort": "https"
+      },
+      {
+        "name": "http",
+        "port": 8080,
+        "protocol": "TCP",
+        "targetPort": "http"
+      },
+      {
+        "name": "dport",
+        "port": 8004,
+        "protocol": "TCP",
+        "targetPort": 8004
+      }
+    ],
+    "selector": {
+      "app": "cloudcenter-blade-vmware-20-0778"
+    },
+    "type": "LoadBalancer"
+  }
+}
